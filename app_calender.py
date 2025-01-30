@@ -21,7 +21,7 @@ def extract_meeting_details(ics_content):
     
     return meetings
 
-st.title("ICS File Meeting Extractor - kavishankar")
+st.title("ICS File Meeting Extractor -kavishankar")
 
 uploaded_file = st.file_uploader("Choose an ICS file", type="ics")
 
@@ -30,6 +30,7 @@ if uploaded_file is not None:
     meetings = extract_meeting_details(ics_content)
 
     if meetings:
+        df = pd.DataFrame(meetings)
         
         
         csv = df.to_csv(index=False).encode('utf-8')
@@ -38,9 +39,8 @@ if uploaded_file is not None:
             data=csv,
             file_name='meeting_details.csv',
             mime='text/csv',
-        ) 
-        
-        df = pd.DataFrame(meetings)
+        )
         st.table(df)
+
     else:
         st.write("No meetings found in the ICS file.")
